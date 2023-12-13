@@ -2,32 +2,30 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - main
+      - gitaction
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v3
-        - run: echo  "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password---password-stdin
-        - run: docker build -t mj.ran91/react-test -f Dockerfile.Dockerfile.dev
-        - run: docker run -e CI=ture mj.ran91/react-test npm mj.ran91/react-test
+      - uses: actions/checkout@v3
+      - run: echo  "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password---password-stdin
+      - run: docker build -t mj.ran91/react-test -f Dockerfile.Dockerfile.dev
+      - run: docker run -e CI=true mj.ran91/react-test npm test
 
-        - name: Generate deployment package
-          run: zip -r deploy.zip . -x '*.git*'
+      - name: Generate deployment package
+        run: zip -r deploy.zip . -x '*.git*'
 
-        - name: Deploy to EB
-          user: einaregilsson/beanstalk-deploy@v18
-          with:
-            aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-            aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-            application_name: react-docker-test
-            environment_name: React-docker-gh-test-env
-            existing_bucket_name: elasticbeanstalk-ap-southeast-2-450733265403
-            region: ap-southeast-2
-            version_label: ${{ github.sha }}
-            deployment_package: deploy.zip
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v18
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          application_name: react-docker-test
+          environment_name: React-docker-gh-test-env
+          existing_bucket_name: elasticbeanstalk-ap-southeast-2-450733265403
+          region: ap-southeast-2
+          version_label: ${{ github.sha }}
+          deployment_package: deploy.zip
 
     
