@@ -6,19 +6,18 @@ services:
   - docker
 
 before_install: 
-  - docker build -t jangminju/react-test-app ./frontend/Dockerfile.dev ./frontend
+  - docker build -t minju/react-test-app ./frontend/Dockerfile.dev ./frontend
 
 script: 
-  - docker run -e CI=ture jangminju/react-test-app npm run test
+  - docker run -e CI=ture minju/react-test-app npm run test
 
 after_success:
-  - docker build -t jangminju/docker-frontend ./frontend
-  - docker build -t jangminju/docker-backend  ./backend
-  - docker build -t jangminju/docker-nginx    ./nginx
+  - docker build -t minju/docker-frontend ./frontend
+  - docker build -t minju/docker-backend  ./backend
+  - docker build -t minju/docker-nginx    ./nginx
 
   - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCEKR_HUB_ID" --password-stdin
 
-  - docker push jangminju/docker-frontend
-  - docker push jangminju/docker-backend
-  - docker push jangminju/docker-nginx
-  
+  - docker push minju/docker-frontend
+  - docker push minju/docker-backend
+  - docker push minju/docker-nginx
