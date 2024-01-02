@@ -21,3 +21,15 @@ after_success:
   - docker push jangminju/docker-frontend
   - docker push jangminju/docker-backend
   - docker push jangminju/docker-nginx
+
+deploy:
+  provider: elasticbeanstalk
+  region: "ap-southeast-2"
+  app: "docker-fullstack-app"
+  env: "Docker-fullstack-app-env"
+  bucket_name: elasticbeanstalk-ap-southeast-2-450733265403
+  bucket_path: "docker-fullstack-app"
+  on:
+    branch: main
+access_key_id: $AWS_ACCESS_KEY
+secret_access_key: $AWS_SECRET_ACCESS_KEY
