@@ -27,7 +27,7 @@ function App() {
     { value: value })
     .then(response => {
       if (response.data.success) {
-        console.log('response.data', response.data)
+        console.log('response.data', response.data);
         setLists([...lists, response.data])
         setValue("");
       } else {
