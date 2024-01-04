@@ -29,8 +29,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          application_name: fullstack-docker-app
-          environment_name: Fullstack-docker-app-env
+          application_name: Fullstack-docker-app-env
+          environment_name: Fullstack-docker-app-env-env
           existing_bucket_name: elasticbeanstalk-ap-northeast-2-972153559337
           region: ap-southeast-2
           version_label: ${{ github.sha }}
